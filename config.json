@@ -1,0 +1,13 @@
+﻿{
+  "version": "1.0.0",
+  "repo": "https://raw.githubusercontent.com/addgshare-gif/EdgeIERestore/main",
+  "update_targets": [
+    "EdgeIEModeManager.ps1",
+    "modules/ADMX.psm1",
+    "modules/GUI.psm1",
+    "modules/IEManager.psm1",
+    "modules/Language.psm1",
+    "modules/Update.psm1",
+    "modules/Utils.psm1"
+  ]
+}
