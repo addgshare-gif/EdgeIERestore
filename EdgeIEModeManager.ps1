@@ -268,7 +268,8 @@ $btnRestart.Add_Click({
 # -----------------------------
 # Run Form
 # -----------------------------
-$form.Topmost = $true
+$form.Topmost = $false
 $form.Add_Shown({ $form.Activate() })
 $form.ShowDialog() | Out-Null
+
 
