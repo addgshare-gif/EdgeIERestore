@@ -1,0 +1,3 @@
+[submodule "EdgeIERestore"]
+	path = EdgeIERestore
+	url = https://github.com/addgshare-gif/EdgeIERestore
