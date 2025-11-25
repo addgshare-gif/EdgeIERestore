@@ -3,20 +3,32 @@
 # Version: 1.0.0
 ###############################################################################
 
-# -----------------------------
-# AUTO-UPDATE MODULE
-# -----------------------------
+###############################################
+# Auto Update (Fixed for EdgeIERestore repo)
+###############################################
+
 $LocalVersion = "1.0.0"
-$VersionURL = "https://raw.githubusercontent.com/addgshare-gif/EdgeIEModeManager/main/version.txt"
-$UpdateURL  = "https://raw.githubusercontent.com/addgshare-gif/EdgeIEModeManager/main/EdgeIEModeManager.ps1"
+
+# 正确的仓库：EdgeIERestore
+$VersionURL = "https://raw.githubusercontent.com/addgshare-gif/EdgeIERestore/main/version.txt"
+$UpdateURL  = "https://raw.githubusercontent.com/addgshare-gif/EdgeIERestore/main/EdgeIEModeManager.ps1"
 
 try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
     $RemoteVersion = (Invoke-WebRequest $VersionURL -UseBasicParsing -TimeoutSec 5).Content.Trim()
+
     if ([version]$RemoteVersion -gt [version]$LocalVersion) {
+
         Write-Host "New version $RemoteVersion available. Updating..."
-        $TempPath = "$env:TEMP\EdgeIEModeManager_Update.ps1"
-        Invoke-WebRequest -Uri $UpdateURL -OutFile $TempPath -UseBasicParsing
-        Start-Process "powershell.exe" "-ExecutionPolicy Bypass -File `"$TempPath`""
+
+        $TempFile = "$env:TEMP\EdgeIEModeManager_Update.ps1"
+
+        # 下载最新脚本
+        Invoke-WebRequest -Uri $UpdateURL -OutFile $TempFile -UseBasicParsing
+
+        # 覆盖旧脚本，自启动
+        Start-Process "powershell.exe" "-ExecutionPolicy Bypass -File `"$TempFile`""
         exit
     }
 }
@@ -259,3 +271,4 @@ $btnRestart.Add_Click({
 $form.Topmost = $true
 $form.Add_Shown({ $form.Activate() })
 $form.ShowDialog() | Out-Null
+
