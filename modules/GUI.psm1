@@ -75,7 +75,7 @@ function Start-EdgeManagerUI {
 
     $btnExit = New-Object System.Windows.Forms.Button
     $btnExit.Text = TXT "Exit"
-    $btnExit.Size = "100,30"
+    $btnExit.Size = "140,30"
     $btnExit.Location = "21,250"   # 靠右下角
     $form.Controls.Add($btnExit)
 
