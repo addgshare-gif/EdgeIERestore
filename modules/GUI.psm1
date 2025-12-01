@@ -1,6 +1,7 @@
 Import-Module "$PSScriptRoot\Language.psm1" -Force
 Import-Module "$PSScriptRoot\ADMX.psm1" -Force
 Import-Module "$PSScriptRoot\IEManager.psm1" -Force
+Import-Module "$PSScriptRoot\Update.psm1" -Force   # 自动更新模块
 
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
@@ -10,7 +11,7 @@ function Start-EdgeManagerUI {
 
     $form              = New-Object System.Windows.Forms.Form
     $form.Text         = TXT "Title"
-    $form.Size         = New-Object System.Drawing.Size(460, 300)
+    $form.Size         = New-Object System.Drawing.Size(460, 320)
     $form.StartPosition = "CenterScreen"
     $form.FormBorderStyle = "FixedDialog"
     $form.MaximizeBox  = $false
@@ -70,18 +71,29 @@ function Start-EdgeManagerUI {
     $form.Controls.Add($lbl)
 
     #####################################################
-    # NEW: EXIT BUTTON
+    # EXIT BUTTON
     #####################################################
-
     $btnExit = New-Object System.Windows.Forms.Button
     $btnExit.Text = TXT "Exit"
-    $btnExit.Size = "140,30"
-    $btnExit.Location = "21,250"   # 靠右下角
+    $btnExit.Size = "100,30"
+    $btnExit.Location = "340,230"
     $form.Controls.Add($btnExit)
-
-    # Exit event
     $btnExit.Add_Click({
         $form.Close()
+    })
+
+    #####################################################
+    # CHECK UPDATE BUTTON
+    #####################################################
+    $btnUpdate = New-Object System.Windows.Forms.Button
+    $btnUpdate.Text = "Check Update"
+    $btnUpdate.Size = "120,30"
+    $btnUpdate.Location = "20,240"
+    $form.Controls.Add($btnUpdate)
+
+    $btnUpdate.Add_Click({
+        Update-Application -ExePath "$PSScriptRoot\EdgeIEModeRestorer.exe" `
+                            -VersionFile "$PSScriptRoot\version.txt"
     })
 
     #####################################################
@@ -102,6 +114,7 @@ function Start-EdgeManagerUI {
         $btnRestart.Text = TXT "RestartEdge"
         $btnLang.Text = TXT "SwitchLang"
         $btnExit.Text = TXT "Exit"
+        # Check Update button保持英文，不需要多语言
     })
 
     # ADMX install
