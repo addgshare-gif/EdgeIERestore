@@ -70,6 +70,21 @@ function Start-EdgeManagerUI {
     $form.Controls.Add($lbl)
 
     #####################################################
+    # NEW: EXIT BUTTON
+    #####################################################
+
+    $btnExit = New-Object System.Windows.Forms.Button
+    $btnExit.Text = TXT "Exit"
+    $btnExit.Size = "100,30"
+    $btnExit.Location = "340,230"   # 靠右下角
+    $form.Controls.Add($btnExit)
+
+    # Exit event
+    $btnExit.Add_Click({
+        $form.Close()
+    })
+
+    #####################################################
     # Event bindings
     #####################################################
 
@@ -77,7 +92,7 @@ function Start-EdgeManagerUI {
     $btnLang.Add_Click({
         if ($Global:Lang -eq "en") { Set-Lang "zh" } else { Set-Lang "en" }
 
-        # Refresh text
+        # Refresh text after switching language
         $form.Text = TXT "Title"
         $btnInstall.Text = TXT "InstallADMX"
         $rbEnable.Text = TXT "EnableIE"
@@ -86,6 +101,7 @@ function Start-EdgeManagerUI {
         $btnGP.Text = TXT "GPUpdate"
         $btnRestart.Text = TXT "RestartEdge"
         $btnLang.Text = TXT "SwitchLang"
+        $btnExit.Text = TXT "Exit"
     })
 
     # ADMX install
